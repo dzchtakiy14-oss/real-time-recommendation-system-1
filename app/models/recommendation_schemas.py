@@ -8,7 +8,7 @@ class RecommendationRequest(BaseModel):
     user_id: int = Field(ge=0)
     
 class RecommendedItemFeatures(BaseModel):
-    item_id: int 
+    item_id: str 
     title: str 
     image_s: str
     image_m: str

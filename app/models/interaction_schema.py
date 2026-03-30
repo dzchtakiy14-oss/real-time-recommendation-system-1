@@ -6,5 +6,5 @@ from typing import List
 # =========================
 class InteractionRequest(BaseModel):
     user_id: int = Field(ge=0)
-    item_id: int = Field(ge=0)
+    item_id: str
     event_type: str 

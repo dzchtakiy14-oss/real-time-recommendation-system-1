@@ -1,0 +1,80 @@
+services:
+
+  redis:
+    image: redis:7-alpine
+    container_name: recommendation-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - recommendation-net
+
+  redis-exporter:
+    image: oliver006/redis_exporter
+    container_name: redis-exporter
+    restart: unless-stopped
+    environment:
+      - REDIS_ADDR=redis:6379
+    ports:
+      - "9121:9121"
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - recommendation-net
+
+  api:
+    build: .
+    container_name: recommendation-fastapi
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    command: gunicorn app.main:app -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:8000
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - ENV=production
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      redis:
+        condition: service_healthy
+
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; s=socket.socket(); s.settimeout(2); s.connect(('localhost',8000)); s.close()"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+
+    networks:
+      - recommendation-net
+
+  locust:
+    image: locustio/locust 
+    ports:
+      - "8089:8089"
+    depends_on:
+      - api 
+    volumes:
+      - ./locustfile.py:/locustfile.py 
+    command: -f /locustfile.py --host http://api:8000
+    networks:
+      - recommendation-net
+
+networks:
+  recommendation-net:
+    driver: bridge
+
+volumes:
+  redis_data:

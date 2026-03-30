@@ -23,17 +23,18 @@ model = TwoTowerModel(
     config["num_periods"],
     config["num_authors"]
 )
-
 model.load_state_dict(torch.load("model/model_weights/model_weights.pt", map_location=device))
+model.to(device)
 model.eval()
 
 # ======================
 # Compute Context Vector
 # ======================
 def compute_context_vec(curr_time: int, status=True):
-    if status is None:
-        return None
     try:
+        if status is None:
+            return None
+        
         # === Compute Context Features ===
         hour = (curr_time // 3600) % 24
         hour_cos = np.cos(np.pi * 2 * hour / 24)
@@ -57,7 +58,7 @@ def compute_context_vec(curr_time: int, status=True):
 
         # === Create Context Vector ===
         with torch.no_grad():
-            context_vec = model.compute_context(hour_cos_tens, hour_sin_tens, day_cos_tens, day_sin_tens, month_cos_tens, hmonth_sin_tens)
+            context_vec = model.compute_context(hour_cos_tens, hour_sin_tens, day_cos_tens, day_sin_tens, month_cos_tens, hmonth_sin_tens).cpu().numpy().tolist()[0]
 
         return context_vec
 

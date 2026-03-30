@@ -1,0 +1,94 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.pth
+
+# Virtual environments
+venv/
+.env/
+.env.*
+*.venv/
+
+# =========================
+# Git
+# =========================
+.git/
+.gitignore
+
+# =========================
+# IDEs / Editors
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# Logs & runtime files
+# =========================
+*.log
+logs/
+tmp/
+temp/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Docker
+# =========================
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# =========================
+# Data (optional - حسب مشروعك)
+# =========================
+data/
+datasets/
+*.csv
+*.parquet
+*.json
+
+# =========================
+# Node (if exists)
+# =========================
+node_modules/
+
+# =========================
+# Testing / Coverage
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Build artifacts
+# =========================
+build/
+dist/
+*.egg-info/
+
+# ======
+# Tools
+# ======
+tools/*.tmp
+tools/__pycache__/
+tools/*.log

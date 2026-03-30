@@ -1,0 +1,11 @@
+torch
+fastapi
+uvicorn[standard]
+numpy 
+joblib
+redis
+faiss-cpu
+pandas
+redis
+gdown
+gunicorn
