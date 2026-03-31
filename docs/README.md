@@ -54,4 +54,4 @@ Address real-time system challenges.
 Improve performance using approximate nearest-neighbor search techniques.
 
 Data Flow Diagram: 
-![System Diagram](docs/Data_Flow_Diagram.svg)
+![System Diagram](Data_Flow_Diagram.svg)
