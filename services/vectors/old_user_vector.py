@@ -12,7 +12,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # =============
 # Prepare Redis
 # =============
-pool = redis.ConnectionPool(host="localhost", port=6379, db=0, decode_responses=False)
+pool = redis.ConnectionPool(host="redis", port=6379, db=0, decode_responses=False)
 r = redis.Redis(connection_pool=pool)
 
 # =====================
