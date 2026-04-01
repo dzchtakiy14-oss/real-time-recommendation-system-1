@@ -72,7 +72,7 @@ def providing_recommendation(user_idx, new_user_vec, k):
             missing_num = k - len(reranked_items)
             all_items = set(mapping_items_idx_to_id.keys())
             filtered_items = list(all_items - set(interacted_items_int))
-            if filtered_items >= missing_num:
+            if len(filtered_items) >= missing_num:
                 reranked_items.extend(random.sample(filtered_items, k=missing_num))
             else:
                 reranked_items.extend(filtered_items)
